@@ -124,8 +124,11 @@ if platform.platform().startswith('Win'):
         extra_compile_args = [
             '/EHsc',
             '-DBOOST_DATE_TIME_NO_LIB',
-            '/std:c++11',
+            '/std:c++14',
         ]
+    else:
+        # fix bug in MingW-W64
+        extra_compile_args.append("-D_hypot=hypot")
 
 
 stanc_sources = [

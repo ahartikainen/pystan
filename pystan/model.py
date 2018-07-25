@@ -294,12 +294,17 @@ class StanModel:
                 '-Wno-uninitialized',
                 '-std=c++11',
             ]
-            if platform.platform().startswith('Win') and build_extension.compiler in (None, 'msvc'):
-                extra_compile_args = [
-                    '/EHsc',
-                    '-DBOOST_DATE_TIME_NO_LIB',
-                    '/std:c++11',
-                ]
+            if platform.platform().startswith('Win'):
+                if build_extension.compiler in (None, 'msvc'):
+                    logger.warning("Compiling with MSVC is not currently supported")
+                    extra_compile_args = [
+                        '/EHsc',
+                        '-DBOOST_DATE_TIME_NO_LIB',
+                        '/std:c++14',
+                    ]
+                else:
+                    # fix bug in MingW-W64
+                    extra_compile_args.append("-D_hypot=hypot")
 
         distutils.log.set_verbosity(verbose)
         extension = Extension(name=self.module_name,
