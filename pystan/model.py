@@ -304,7 +304,11 @@ class StanModel:
                     ]
                 else:
                     # fix bug in MingW-W64
-                    extra_compile_args.append("-D_hypot=hypot")
+                    # use posix threads
+                    extra_compile_args.extend([
+                        "-D_hypot=hypot",
+                        "-pthread",
+                        ])
 
         distutils.log.set_verbosity(verbose)
         extension = Extension(name=self.module_name,

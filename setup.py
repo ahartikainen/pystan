@@ -128,7 +128,10 @@ if platform.platform().startswith('Win'):
         ]
     else:
         # fix bug in MingW-W64
-        extra_compile_args.append("-D_hypot=hypot")
+        extra_compile_args.extend([
+            "-D_hypot=hypot",
+            "-pthread",
+            ])
 
 
 stanc_sources = [
