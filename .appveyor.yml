@@ -11,17 +11,17 @@ environment:
       secure: cqdCOlelH3UdBVv+FyD4nNfT5X5bB2OwqehwkxqMABKcHy1H4+t8v3jVVvTxV7uq
 
   matrix:
-    - CONDA: 27
-    - CONDA: 35
-    - CONDA: 36
+    - PY: 27
+    - PY: 35
+    - PY: 36
 
 install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
-  - SET PY = %CONDA%
-  - if (%CONDA%=="27") (SET "CONDA=")
-  - if (%PLATFORM%=="x64") (SET "CONDA=%CONDA%-x64")
-  - SET "PATH=C:\Miniconda%CONDA%;C:\Miniconda%CONDA%\Scripts;C:\Miniconda%CONDA%\bin;%PATH%"
+  - ps: "ls \"C:/Miniconda/"
+  - if (%PY%=="27") (SET "PY=")
+  - if (%PLATFORM%=="x64") (SET "PY=%PY%-x64")
+  - SET "PATH=C:\Miniconda%PY%;C:\Miniconda%PY%\Scripts;C:\Miniconda%PY%\bin;%PATH%"
   - echo env
   - echo %PATH%
   - conda activate base
