@@ -19,39 +19,37 @@ install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
 
-  - ps: |
-      $PY = $env:CONDA
-      if ($env:CONDA -eq "27") { $env:CONDA = "" }
-      if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
-      $env:PATH = "C:\Miniconda$env:CONDA\;C:\Miniconda$env:CONDA\Scripts\;$env:PATH"
-      activate base
-      # checkout submodules
-      git submodule update --init --recursive
-      # Check that we have the expected version and architecture for Python
-      python --version
-      python -c "import struct; print(struct.calcsize('P') * 8)"
-      conda config --set always_yes yes --set changeps1 no
-      conda config --add channels conda-forge
-      conda update -q conda
-      conda install numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q
-      gcc --version
-      # Upgrade to the latest version of pip to avoid it displaying warnings
-      # about it being out of date.
-      python -m pip install --disable-pip-version-check --upgrade pip
+  - SET PY = %CONDA%
+  - if (%CONDA%=="27") (SET "CONDA=")
+  - if (%PLATFORM%=="x64") {SET "CONDA=%CONDA%-x64" }
+  - SET "PATH=\"C:\Miniconda%CONDA%\;C:\Miniconda%CONDA%\Scripts\;%PATH%\""
+  - activate base
+  # checkout submodules
+  - git submodule update --init --recursive
+  # Check that we have the expected version and architecture for Python
+  - python --version
+  - python -c "import struct; print(struct.calcsize('P') * 8)"
+  - conda config --set always_yes yes --set changeps1 no
+  - conda config --add channels conda-forge
+  - conda update -q conda
+  - conda install numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q
+  - gcc --version
+  # Upgrade to the latest version of pip to avoid it displaying warnings
+  # about it being out of date.
+  - python -m pip install --disable-pip-version-check --upgrade pip
 
-      # Install the build dependencies of the project.
-      pip install -r ./continuous_integration/appveyor/requirements.txt
-      pip install -r requirements.txt
-      pip install -r test-requirements.txt
+  # Install the build dependencies of the project.
+  - pip install -r ./continuous_integration/appveyor/requirements.txt
+  - pip install -r requirements.txt
+  - pip install -r test-requirements.txt
 
 build_script:
-  - ps: |
-      # build the wheel and install it
-      python setup.py bdist_wheel bdist_wininst
-      ls dist
+  # build the wheel and install it
+  - python setup.py bdist_wheel bdist_wininst
+  - ps: "ls dist"
 
-      # Install the generated wheel package to test it
-      pip install --pre --no-index --find-links dist/ pystan
+  # Install the generated wheel package to test it
+  - pip install --pre --no-index --find-links dist/ pystan
 
 test_script:
   # Change to a non-source folder to make sure we run the tests on the
@@ -59,8 +57,7 @@ test_script:
   - "mkdir empty_folder"
   - "cd empty_folder"
   - "SET JOBLIB_MULTIPROCESSING=1"
-  - ps: |
-      python -c \"import nose; nose.main()\" -s pystan.tests.test_basic pystan.tests.test_basic_array"
+  - "python -c \"import nose; nose.main()\" -s pystan.tests.test_basic pystan.tests.test_basic_array"
   # Move back to the project folder
   - "cd .."
 
