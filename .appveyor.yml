@@ -11,37 +11,9 @@ environment:
       secure: cqdCOlelH3UdBVv+FyD4nNfT5X5bB2OwqehwkxqMABKcHy1H4+t8v3jVVvTxV7uq
 
   matrix:
-    - PYTHON: "C:\\Miniconda"
-      PYTHON_VERSION: "2.7.x"
-      PYTHON_ARCH: "32"
-
-    - PYTHON: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "2.7.x"
-      PYTHON_ARCH: "64"
-
-    - PYTHON: "C:\\Miniconda35"
-      PYTHON_VERSION: "3.5.x"
-      PYTHON_ARCH: "32"
-
-    - PYTHON: "C:\\Miniconda35-x64"
-      PYTHON_VERSION: "3.5.x"
-      PYTHON_ARCH: "64"
-
-    - PYTHON: "C:\\Miniconda36"
-      PYTHON_VERSION: "3.6.x"
-      PYTHON_ARCH: "32"
-
-    - PYTHON: "C:\\Miniconda36-x64"
-      PYTHON_VERSION: "3.6.x"
-      PYTHON_ARCH: "64"
-
-    - PYTHON: "C:\\Miniconda37"
-      PYTHON_VERSION: "3.7.x"
-      PYTHON_ARCH: "32"
-
-    - PYTHON: "C:\\Miniconda37-x64"
-      PYTHON_VERSION: "3.7.x"
-      PYTHON_ARCH: "64"
+    - CONDA: 27
+    - CONDA: 35
+    - CONDA: 36
 
 install:
   - ECHO "Filesystem root:"
@@ -54,9 +26,12 @@ install:
   - "python --version"
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
-  # Upgrade to the latest conda
-  - "conda update conda -q -y"
-
+  - ps: |
+      $env:PATH = "C:\Miniconda$env:CONDA\;C:\Miniconda$env:CONDA\Scripts\;$env:PATH"
+      conda config --set always_yes yes --set changeps1 no
+      conda config --add channels conda-forge
+      conda update -q conda
+  
   # Upgrade to the latest version of pip to avoid it displaying warnings
   # about it being out of date.
   - "python -m pip install --disable-pip-version-check --upgrade pip"
