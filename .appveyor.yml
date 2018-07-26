@@ -29,7 +29,7 @@ install:
       git submodule update --init --recursive
       # Check that we have the expected version and architecture for Python
       python --version
-      python -c "import struct; print(struct.calcsize('P') * 8)\"
+      python -c "import struct; print(struct.calcsize('P') * 8)"
       conda config --set always_yes yes --set changeps1 no
       conda config --add channels conda-forge
       conda update -q conda
@@ -44,14 +44,14 @@ install:
       pip install -r requirements.txt
       pip install -r test-requirements.txt
 
+build:
+  - ps |
       # build the wheel and install it
       python setup.py bdist_wheel bdist_wininst
       ls dist
 
       # Install the generated wheel package to test it
       pip install --pre --no-index --find-links dist/ pystan
-
-build: false  # building occurs during install above
 
 test_script:
   # Change to a non-source folder to make sure we run the tests on the
