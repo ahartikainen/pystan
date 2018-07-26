@@ -44,7 +44,7 @@ install:
       pip install -r requirements.txt
       pip install -r test-requirements.txt
 
-build:
+build_script:
   - ps: |
       # build the wheel and install it
       python setup.py bdist_wheel bdist_wininst
