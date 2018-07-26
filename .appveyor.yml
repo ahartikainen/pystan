@@ -35,11 +35,7 @@ install:
       conda config --add channels conda-forge
       conda update -q conda
       conda install numpy cython scipy matplotlib pandas libpython -q
-      if ($PY -eq "27") {
-           conda install mingw32
-      } else {
-           conda install m2w64-toolchain -c msys2
-      }
+      conda install m2w64-toolchain -c msys2
       gcc --version
       # Upgrade to the latest version of pip to avoid it displaying warnings
       # about it being out of date.
@@ -51,11 +47,11 @@ install:
       pip install -r test-requirements.txt
 
   # build the wheel and install it
-  #- python setup.py bdist_wheel bdist_wininst"
-  #- ps: "ls dist"
+  - python setup.py bdist_wheel bdist_wininst"
+  - ps: "ls dist"
 
   # Install the generated wheel package to test it
-  #- "pip install --pre --no-index --find-links dist/ pystan"
+  - "pip install --pre --no-index --find-links dist/ pystan"
 
 build: false  # building occurs during install above
 
@@ -64,10 +60,9 @@ test_script:
   # installed library.
   - "mkdir empty_folder"
   - "cd empty_folder"
-  #- "SET JOBLIB_MULTIPROCESSING=1"
-  #- "python -c \"import nose; nose.main()\" -s pystan.tests.test_basic pystan.tests.test_basic_array"
+  - "SET JOBLIB_MULTIPROCESSING=1"
+  - "python -c \"import nose; nose.main()\" -s pystan.tests.test_basic pystan.tests.test_basic_array"
   # Move back to the project folder
-  - ECHO dir
   - "cd .."
 
 after_test:
