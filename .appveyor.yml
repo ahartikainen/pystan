@@ -27,15 +27,14 @@ install:
       if ($env:CONDA -eq "27") { $env:CONDA = "" }
       if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
       $env:PATH = "C:\Miniconda$env:CONDA\;C:\Miniconda$env:CONDA\Scripts\;$env:PATH"
-      activate -n base
+      activate base
       # Check that we have the expected version and architecture for Python
       python --version
       python -c "import struct; print(struct.calcsize('P') * 8)"
       conda config --set always_yes yes --set changeps1 no
       conda config --add channels conda-forge
       conda update -q conda
-      conda install numpy cython scipy matplotlib pandas libpython -q
-      conda install m2w64-toolchain -c msys2
+      conda install numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q
       gcc --version
       # Upgrade to the latest version of pip to avoid it displaying warnings
       # about it being out of date.
