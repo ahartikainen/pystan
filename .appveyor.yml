@@ -46,9 +46,9 @@ install:
       python -m pip install --disable-pip-version-check --upgrade pip
 
       # Install the build dependencies of the project.
-      pip install -r ./continuous_integration/appveyor/requirements.txt"
-      pip install -r requirements.txt"
-      pip install -r test-requirements.txt"
+      pip install -r ./continuous_integration/appveyor/requirements.txt
+      pip install -r requirements.txt
+      pip install -r test-requirements.txt
 
   # build the wheel and install it
   #- python setup.py bdist_wheel bdist_wininst"
