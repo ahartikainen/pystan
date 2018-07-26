@@ -34,27 +34,24 @@ install:
       conda config --add channels conda-forge
       conda update -q conda
       conda install numpy cython scipy matplotlib pandas libpython -q
-      if (%env:CONDA -eq "27") {
+      if ($env:CONDA -eq "27") {
            conda install mingw32
       }
       else {
            conda install m2w64-toolchain -c msys2
       }
-  - "gcc --version"
-  # Upgrade to the latest version of pip to avoid it displaying warnings
-  # about it being out of date.
-  - "python -m pip install --disable-pip-version-check --upgrade pip"
+      gcc --version
+      # Upgrade to the latest version of pip to avoid it displaying warnings
+      # about it being out of date.
+      python -m pip install --disable-pip-version-check --upgrade pip
 
-  # Install the build dependencies of the project. If some dependencies contain
-  # compiled extensions and are not provided as pre-built wheel packages,
-  # pip will build them from source using the MSVC compiler matching the
-  # target Python version and architecture
-  #- "&CMD_IN_ENV% conda install numpy cython matplotlib scipy libpython m2w64-toolchain -c msys2  -y"
-  #- "%CMD_IN_ENV% pip install -r ./continuous_integration/appveyor/requirements.txt"
-  #- "%CMD_IN_ENV% pip install -r requirements.txt"
-  #- "%CMD_IN_ENV% pip install -r test-requirements.txt"
+      # Install the build dependencies of the project.
+      pip install -r ./continuous_integration/appveyor/requirements.txt"
+      pip install -r requirements.txt"
+      pip install -r test-requirements.txt"
+
   # build the wheel and install it
-  #- "%CMD_IN_ENV% python setup.py bdist_wheel bdist_wininst"
+  #- python setup.py bdist_wheel bdist_wininst"
   #- ps: "ls dist"
 
   # Install the generated wheel package to test it
