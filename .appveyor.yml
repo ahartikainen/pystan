@@ -27,11 +27,13 @@ install:
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
   - ps: |
+      if ($env:CONDA -eq "27") { $env:CONDA = "" }
+      if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
       $env:PATH = "C:\Miniconda$env:CONDA\;C:\Miniconda$env:CONDA\Scripts\;$env:PATH"
       conda config --set always_yes yes --set changeps1 no
       conda config --add channels conda-forge
       conda update -q conda
-  
+
   # Upgrade to the latest version of pip to avoid it displaying warnings
   # about it being out of date.
   - "python -m pip install --disable-pip-version-check --upgrade pip"
