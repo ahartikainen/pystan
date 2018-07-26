@@ -19,50 +19,50 @@ install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
 
-  # checkout submodules
-  - git submodule update --init --recursive
+  - ps: |
+      activate base
+      # checkout submodules
+      git submodule update --init --recursive
+      python --version
+      python -c "import struct; print(struct.calcsize('P') * 8)\"
+      $PY = $env:CONDA
+      if ($env:CONDA -eq "27") { $env:CONDA = "" }
+      if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
+      $env:PATH = "C:\Miniconda$env:CONDA\;C:\Miniconda$env:CONDA\Scripts\;$env:PATH"
+      # Check that we have the expected version and architecture for Python
+      conda config --set always_yes yes --set changeps1 no
+      conda config --add channels conda-forge
+      conda update -q conda
+      conda install numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q
+      gcc --version
+      # Upgrade to the latest version of pip to avoid it displaying warnings
+      # about it being out of date.
+      python -m pip install --disable-pip-version-check --upgrade pip
 
-  - python --version
-  - python -c "import struct; print(struct.calcsize('P') * 8)"
+      # Install the build dependencies of the project.
+      pip install -r ./continuous_integration/appveyor/requirements.txt
+      pip install -r requirements.txt
+      pip install -r test-requirements.txt
 
-  - $PY = $env:CONDA
-  - if ($env:CONDA -eq "27") { $env:CONDA = "" }
-  - if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
-  - $env:PATH = "C:\Miniconda$env:CONDA\;C:\Miniconda$env:CONDA\Scripts\;$env:PATH"
-  - activate base
-  # Check that we have the expected version and architecture for Python
-  - conda config --set always_yes yes --set changeps1 no
-  - conda config --add channels conda-forge
-  - conda update -q conda
-  - conda install numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q
-  - gcc --version
-  # Upgrade to the latest version of pip to avoid it displaying warnings
-  # about it being out of date.
-  - python -m pip install --disable-pip-version-check --upgrade pip
+      # build the wheel and install it
+      python setup.py bdist_wheel bdist_wininst
+      ls dist
 
-  # Install the build dependencies of the project.
-  - pip install -r ./continuous_integration/appveyor/requirements.txt
-  - pip install -r requirements.txt
-  - pip install -r test-requirements.txt
-
-  # build the wheel and install it
-  - python setup.py bdist_wheel bdist_wininst
-  - ps: "ls dist"
-
-  # Install the generated wheel package to test it
-  - pip install --pre --no-index --find-links dist/ pystan
+      # Install the generated wheel package to test it
+      pip install --pre --no-index --find-links dist/ pystan
 
 build: false  # building occurs during install above
 
 test_script:
   # Change to a non-source folder to make sure we run the tests on the
   # installed library.
-  - mkdir empty_folder
-  - cd empty_folder
-  - SET JOBLIB_MULTIPROCESSING=1
-  - python -c "import nose; nose.main()" -s pystan.tests.test_basic pystan.tests.test_basic_array
+  - "mkdir empty_folder"
+  - "cd empty_folder"
+  - "SET JOBLIB_MULTIPROCESSING=1"
+  - ps: |
+      python -c \"import nose; nose.main()\" -s pystan.tests.test_basic pystan.tests.test_basic_array"
   # Move back to the project folder
-  - cd ..
+  - "cd .."
 
 after_test:
   - ECHO "AFTER TEST"
