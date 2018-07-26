@@ -22,8 +22,8 @@ install:
   - if (%CONDA%=="27") (SET "CONDA=")
   - if (%PLATFORM%=="x64") (SET "CONDA=%CONDA%-x64")
   - SET "PATH=C:\Miniconda%CONDA%;C:\Miniconda%CONDA%\Scripts;C:\Miniconda%CONDA%\bin;%PATH%"
-  - env
-  - %PATH%
+  - echo env
+  - echo %PATH%
   - conda activate base
   - activate base
   # checkout submodules
