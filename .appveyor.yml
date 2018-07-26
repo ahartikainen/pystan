@@ -27,6 +27,10 @@ install:
   - "python -c \"import struct; print(struct.calcsize('P') * 8)\""
 
   - ps: |
+      echo $env:CONDA
+      SET PY = $env:CONDA
+      echo %PY%
+      else {}
       if ($env:CONDA -eq "27") { $env:CONDA = "" }
       if ($env:PLATFORM -eq "x64") { $env:CONDA = "$env:CONDA-x64" }
       $env:PATH = "C:\Miniconda$env:CONDA\;C:\Miniconda$env:CONDA\Scripts\;$env:PATH"
@@ -34,7 +38,7 @@ install:
       conda config --add channels conda-forge
       conda update -q conda
       conda install numpy cython scipy matplotlib pandas libpython -q
-      if ($env:CONDA -eq "") {
+      if (%PY% -eq "27") {
            conda install mingw32
       } else {
            conda install m2w64-toolchain -c msys2
