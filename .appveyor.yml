@@ -20,8 +20,8 @@ install:
   - ps: "ls \"C:/\""
   - if (%PY%=="27") (SET "PY=")
   - if (%PLATFORM%=="x64") (SET "PY=%PY%-x64")
-  #- SET "PATH=C:\Miniconda%PY%;C:\Miniconda%PY%\Scripts;C:\Miniconda%PY%\bin;%PATH%"
-  - "C:\\Miniconda%PY%\\Scripts\\activate.bat base"
+  #- SET "PATH=C:\\Miniconda%PY%;C:\\Miniconda%PY%\\Scripts;C:\\Miniconda%PY%\\bin;%PATH%"
+  - CALL "C:\\Miniconda%PY%\\Scripts\\activate.bat base"
   # checkout submodules
   - git submodule update --init --recursive
   # Check that we have the expected version and architecture for Python
