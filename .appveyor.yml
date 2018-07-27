@@ -19,6 +19,10 @@ install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
   - SET "CONDAPATH=conda%CONDA%"
+  - if (%CONDA%==27) (ECHO 1)
+  - if (%CONDA%=="27") (ECHO 2)
+  - if (%CONDA%=27) (ECHO 3)
+  - if (%CONDA%="27") (ECHO 4)
   - if (%CONDA%==27) (SET "CONDAPATH=conda")
   - if (%PLATFORM%==x64) (SET "CONDAPATH=%CONDAPATH%-x64")
   #- SET "PATH=C:\\Miniconda%PY%;C:\\Miniconda%PY%\\Scripts;C:\\Miniconda%PY%\\bin;%PATH%"
