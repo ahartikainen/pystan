@@ -18,14 +18,10 @@ environment:
 install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
-  - ps: "ls \"C:/Miniconda/\""
   - if (%PY%=="27") (SET "PY=")
   - if (%PLATFORM%=="x64") (SET "PY=%PY%-x64")
-  - SET "PATH=C:\Miniconda%PY%;C:\Miniconda%PY%\Scripts;C:\Miniconda%PY%\bin;%PATH%"
-  - echo env
-  - echo %PATH%
-  - conda activate base
-  - activate base
+  #- SET "PATH=C:\Miniconda%PY%;C:\Miniconda%PY%\Scripts;C:\Miniconda%PY%\bin;%PATH%"
+  - C:\Miniconda%PY%\Scripts\activate.bat base
   # checkout submodules
   - git submodule update --init --recursive
   # Check that we have the expected version and architecture for Python
