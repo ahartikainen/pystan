@@ -53,8 +53,11 @@ build_script:
   - ECHO "Starting to build the wheel"
   # build the wheel and install it
   - python setup.py bdist_wheel bdist_wininst
+  - if NOT %CONDA%==27 (SET "dist=dist")
+  - if %CONDA%==27 (SET "dist=build")
   - ps: "ls ."
-  - ps: "ls dist"
+  - if NOT %CONDA%==27 (ps: "ls dist")
+  - if NOT %CONDA%==27 (ps: "ls build")
 
   - ECHO "Install generated wheel to test it"
   # Install the generated wheel package to test it
