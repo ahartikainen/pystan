@@ -1,5 +1,5 @@
 version: '{build}'
-image: Visual Studio 2017
+image: Visual Studio 2015
 platform:
   - x86
   - x64
@@ -21,6 +21,7 @@ install:
   - SET "CONDAPATH=conda%CONDA%"
   - if %CONDA%==27 (SET "CONDAPATH=conda")
   - if %PLATFORM%==x64 (SET "CONDAPATH=%CONDAPATH%-x64")
+  - SET "PATH=C:\\mingw-w64\\x86_64-7.3.0-posix-seh-rt_v5-rev0;%PATH%"
   #- SET "PATH=C:\\Miniconda%PY%;C:\\Miniconda%PY%\\Scripts;C:\\Miniconda%PY%\\bin;%PATH%"
   - CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base
 
@@ -32,7 +33,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels conda-forge
   - conda update -q conda
-  - conda install numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q
+  - conda install numpy cython scipy matplotlib pandas libpython -Q #m2w64-toolchain -c msys2 -q
   - gcc --version
   # Upgrade to the latest version of pip to avoid it displaying warnings
   # about it being out of date.
