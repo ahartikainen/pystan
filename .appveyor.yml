@@ -36,8 +36,8 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels conda-forge
   - conda update -q conda
-  - if NOT %CONDA%==27 (conda install numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q)
-  - if %CONDA%==27 (conda install numpy cython scipy matplotlib pandas libpython mingw -q)
+  - if NOT %CONDA%==27 (conda install setuptools numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q)
+  - if %CONDA%==27 (conda install setuptools numpy cython scipy matplotlib pandas libpython mingw -q)
   - python -c "import os, distutils; f=open(os.path.join((os.path.split(distutils.__file__))[0], 'distutils.cfg'), 'w'); f.write('[build]\ncompiler=mingw32');f.close()"
   - gcc --version
   # Upgrade to the latest version of pip to avoid it displaying warnings
@@ -56,7 +56,7 @@ build_script:
   - if NOT %CONDA%==27 (SET "dist=dist")
   - if %CONDA%==27 (SET "dist=build")
   - ps: "ls ."
-  - if NOT %CONDA%==27 (dir dist")
+  - if NOT %CONDA%==27 (dir dist)
   - if NOT %CONDA%==27 (dir build)
 
   - ECHO "Install generated wheel to test it"
