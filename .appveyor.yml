@@ -18,12 +18,12 @@ environment:
 install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
-  - SET "CONDA=conda%CONDA%"
-  - if (%PLATFORM%=="x64") (SET "CONDA=%CONDA%-x64")
-  - if (%CONDA%=="27") if (%PLATFORM%=="x86") (SET "CONDA=conda")
-  - if (%CONDA%=="27") if (%PLATFORM%=="x64") (SET "CONDA=conda-x64")
+  - SET "CONDAPATH=conda%CONDA%"
+  - if (%PLATFORM%=="x64") (SET "CONDAPATH=%CONDAPATH%-x64")
+  - if (%CONDA%=="27") if (%PLATFORM%=="x86") (SET "CONDAPATH=conda")
+  - if (%CONDA%=="27") if (%PLATFORM%=="x64") (SET "CONDAPATH=conda-x64")
   #- SET "PATH=C:\\Miniconda%PY%;C:\\Miniconda%PY%\\Scripts;C:\\Miniconda%PY%\\bin;%PATH%"
-  - CALL "C:\\Mini%CONDA%\\Scripts\\activate.bat" base
+  - CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base
 
   # checkout submodules
   - git submodule update --init --recursive
