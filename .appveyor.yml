@@ -50,10 +50,13 @@ install:
   - pip install -r test-requirements.txt
 
 build_script:
+  - ECHO "Starting to build the wheel"
   # build the wheel and install it
   - python setup.py bdist_wheel bdist_wininst
+  - ps: "ls ."
   - ps: "ls dist"
 
+  - ECHO "Install generated wheel to test it"
   # Install the generated wheel package to test it
   - pip install --pre --no-index --find-links dist/ pystan
 
@@ -62,8 +65,11 @@ test_script:
   # installed library.
   - "mkdir empty_folder"
   - "cd empty_folder"
-  - "SET JOBLIB_MULTIPROCESSING=1"
-  - "python -c \"import nose; nose.main()\" -s pystan.tests.test_basic pystan.tests.test_basic_array"
+  - "SET JOBLIB_MULTIPROCESSING=0"
+  - ECHO "Starting the tests, basic"
+  - "python -c \"import nose; nose.main()\" -s pystan.tests.test_basic"
+  - ECHO "Starting the tests, basic_array"
+  - "python -c \"import nose; nose.main()\" -s pystan.tests.test_basic_array"
   # Move back to the project folder
   - "cd .."
 
