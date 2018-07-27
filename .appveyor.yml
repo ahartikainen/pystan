@@ -11,7 +11,7 @@ environment:
       secure: cqdCOlelH3UdBVv+FyD4nNfT5X5bB2OwqehwkxqMABKcHy1H4+t8v3jVVvTxV7uq
 
   matrix:
-    #- CONDA: 27
+    - CONDA: 27
     - CONDA: 35
     - CONDA: 36
 
