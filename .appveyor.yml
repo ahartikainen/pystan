@@ -22,6 +22,7 @@ install:
   - if %CONDA%==27 (SET "CONDAPATH=conda")
   - if %PLATFORM%==x64 (SET "CONDAPATH=%CONDAPATH%-x64")
   - SET "PATH=C:\\mingw-w64\\x86_64-7.3.0-posix-seh-rt_v5-rev0;%PATH%"
+  - ps: "ls \"C:\\mingw-w64\\x86_64-7.3.0-posix-seh-rt_v5-rev0\""
   #- SET "PATH=C:\\Miniconda%PY%;C:\\Miniconda%PY%\\Scripts;C:\\Miniconda%PY%\\bin;%PATH%"
   - CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base
 
