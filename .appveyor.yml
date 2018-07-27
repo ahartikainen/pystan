@@ -18,6 +18,8 @@ environment:
 install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
+  - ECHO %CONDA%
+  - ECHO %CONDA%=="27"
   - SET "CONDAPATH=conda%CONDA%"
   - if (%CONDA%=="27") (SET "CONDAPATH=conda")
   - if (%PLATFORM%=="x64") (SET "CONDAPATH=%CONDAPATH%-x64")
