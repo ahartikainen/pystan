@@ -127,7 +127,7 @@ def effective_sample_size(dict sim, int n):
     for chain in range(m):
         n_kept_samples = ns_kept[chain]
         chain_mean.push_back(get_chain_mean(sim, chain, n))
-        chain_var.push_back(acov[chain][0] * n_kept_samples / max((n_kept_samples-1), 1)) # fix divide by zero error mingw
+        chain_var.push_back(acov[chain][0] * n_kept_samples / (n_kept_samples-1))
 
     cdef double mean_var = stan_mean(chain_var)
     cdef double var_plus = mean_var * (n_samples-1) / n_samples

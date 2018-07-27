@@ -123,9 +123,9 @@ class StanModel:
         A dict returned from a previous call to `stanc` which can be
         used to specify the model instead of using the parameter `file` or
         `model_code`.
-    
+
     include_paths : list of strings
-        Paths for #include files defined in Stan program code.    
+        Paths for #include files defined in Stan program code.
 
     boost_lib : string
         The path to a version of the Boost C++ library to use instead of
@@ -166,7 +166,7 @@ class StanModel:
         Return the 'CXXFLAGS' used for compiling the model.
     get_include_paths
         Return include_paths used for compiled model.
-        
+
     See also
     --------
     stanc: Compile a Stan model specification
@@ -207,7 +207,7 @@ class StanModel:
     """
     def __init__(self, file=None, charset='utf-8', model_name="anon_model",
                  model_code=None, stanc_ret=None, include_paths=None,
-                 boost_lib=None, eigen_lib=None, verbose=False, 
+                 boost_lib=None, eigen_lib=None, verbose=False,
                  obfuscate_model_name=True, extra_compile_args=None):
 
         if stanc_ret is None:
@@ -308,6 +308,7 @@ class StanModel:
                     extra_compile_args.extend([
                         "-D_hypot=hypot",
                         "-pthread",
+                        "-fexceptions",
                         ])
 
         distutils.log.set_verbosity(verbose)
@@ -668,7 +669,7 @@ class StanModel:
             Argument `refresh` can be used to control how to indicate the progress
             during sampling (i.e. show the progress every \code{refresh} iterations).
             By default, `refresh` is `max(iter/10, 1)`.
-            
+
         check_hmc_diagnostics : bool, optional
             After sampling run `pystan.diagnostics.check_hmc_diagnostics` function.
             Default is `True`.
@@ -723,7 +724,7 @@ class StanModel:
         if chains < 1:
             raise ValueError("The number of chains is less than one; sampling"
                              "not done.")
-        
+
         check_hmc_diagnostics = kwargs.pop('check_hmc_diagnostics', True)
         # check that arguments in kwargs are valid
         valid_args = {"chain_id", "init_r", "test_grad", "append_samples", "refresh", "control"}

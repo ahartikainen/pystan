@@ -131,6 +131,7 @@ if platform.platform().startswith('Win'):
         extra_compile_args.extend([
             "-D_hypot=hypot",
             "-pthread",
+            "-fexceptions",
             ])
 
 
