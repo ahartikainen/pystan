@@ -11,18 +11,20 @@ environment:
       secure: cqdCOlelH3UdBVv+FyD4nNfT5X5bB2OwqehwkxqMABKcHy1H4+t8v3jVVvTxV7uq
 
   matrix:
-    - PY: 27
-    - PY: 35
-    - PY: 36
+    - CONDA: 27
+    - CONDA: 35
+    - CONDA: 36
 
 install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
-  - if (%PY%=="27") (SET "PY=")
-  - if (%PLATFORM%=="x64") (SET "PY=%PY%-x64")
+  - SET "CONDA=conda%CONDA%"
+  - if (%PLATFORM%=="x64") (SET "CONDA=%CONDA%-x64")
+  - if (%CONDA%=="27") if (%PLATFORM%=="x86") (SET "CONDA=conda")
+  - if (%CONDA%=="27") if (%PLATFORM%=="x64") (SET "CONDA=conda-x64")
   #- SET "PATH=C:\\Miniconda%PY%;C:\\Miniconda%PY%\\Scripts;C:\\Miniconda%PY%\\bin;%PATH%"
-  - ps: " ls C:\\Miniconda$env:PY\\Scripts"
-  - CALL "C:\\Miniconda%PY%\\Scripts\\activate.bat" base
+  - CALL "C:\\Mini%CONDA%\\Scripts\\activate.bat" base
+
   # checkout submodules
   - git submodule update --init --recursive
   # Check that we have the expected version and architecture for Python
