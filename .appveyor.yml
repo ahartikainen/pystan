@@ -27,7 +27,7 @@ install:
   #- SET "PATH=C:\\Miniconda%PY%;C:\\Miniconda%PY%\\Scripts;C:\\Miniconda%PY%\\bin;%PATH%"
   - CALL "C:\\Mini%CONDAPATH%\\Scripts\\conda.exe" info --envs
   - if %CONDA%==35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" root)
-  - if %CONDA%!=35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base)
+  - if NOT %CONDA%==35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base)
   # checkout submodules
   - git submodule update --init --recursive
   # Check that we have the expected version and architecture for Python
