@@ -18,11 +18,9 @@ environment:
 install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
-  - ECHO %CONDA%
-  - ECHO %CONDA%=="27"
   - SET "CONDAPATH=conda%CONDA%"
-  - if (%CONDA%=="27") (SET "CONDAPATH=conda")
-  - if (%PLATFORM%=="x64") (SET "CONDAPATH=%CONDAPATH%-x64")
+  - if (%CONDA%==27) (SET "CONDAPATH=conda")
+  - if (%PLATFORM%==x64) (SET "CONDAPATH=%CONDAPATH%-x64")
   #- SET "PATH=C:\\Miniconda%PY%;C:\\Miniconda%PY%\\Scripts;C:\\Miniconda%PY%\\bin;%PATH%"
   - ECHO "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat base"
   - CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base
