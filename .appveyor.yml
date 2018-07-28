@@ -36,7 +36,10 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels conda-forge
   - conda update -q conda
-  - conda install setuptools numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q
+  - conda install setuptools libpython m2w64-toolchain -c msys2 -q
+  - conda install numpy cython scipy matplotlib pandas -q
+  # try to fix conda error on numpy mkl/openblas
+  - conda update numpy scipy pandas -q
   #- python -c "import os, distutils; f=open(os.path.join((os.path.split(distutils.__file__))[0], 'distutils.cfg'), 'w'); f.write('[build]\ncompiler=mingw32');f.close()"
   - python -c "import numpy as np; print('numpy imported succesfull')"
   - gcc --version
