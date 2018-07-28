@@ -1,6 +1,6 @@
 import os
 import unittest
-
+import tempfile
 
 import pystan
 
@@ -34,20 +34,21 @@ class TestNormalVB(unittest.TestCase):
         self.assertIsNotNone(vbf)
 
     def test_vb_sample_file(self):
-        sample_file = '/tmp/vb-results.csv'
+        sample_file = os.path.join(tempfile.mkdtemp(), 'vb-results.csv')
         vbf = self.model.vb(algorithm='fullrank', sample_file=sample_file, seed=self.seed)
         self.assertIsNotNone(vbf)
         self.assertEqual(vbf['args']['sample_file'].decode('utf-8'), sample_file)
         self.assertTrue(os.path.exists(sample_file))
 
     def test_vb_diagnostic_file(self):
-        sample_file = '/tmp/vb-results.csv'
-        diag_file = '/tmp/vb-diag.csv'
+        # todo: use tempfile module
+        sample_file = os.path.join(tempfile.mkdtemp(), 'vb-results.csv')
+        diag_file = os.path.join(tempfile.mkdtemp(), 'vb-diag.csv')
         vbf = self.model.vb(algorithm='fullrank', sample_file=sample_file, diagnostic_file=diag_file, seed=self.seed)
         self.assertIsNotNone(vbf)
         self.assertEqual(vbf['args']['diagnostic_file'].decode('utf-8'), diag_file)
         self.assertTrue(os.path.exists(diag_file))
-        
+
     def test_vb_pars(self):
         vbfit = self.model.vb(algorithm='fullrank', pars=['y'], seed=self.seed)
         vbfit2 = self.model.vb(algorithm='fullrank', pars='z', seed=self.seed)
