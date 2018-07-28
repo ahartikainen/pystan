@@ -66,11 +66,9 @@ test_script:
   # installed library.
   - mkdir empty_folder
   - cd empty_folder
-  - SET "JOBLIB_MULTIPROCESSING=0"
-  - SET "NOSE_PROCESSES=0"
-  - python -c "import pystan;bernoulli_model_code = 'data {int<lower=0> N;int<lower=0,upper=1> y[N];}parameters {real<lower=0,upper=1> theta;}model {for (n in 1:N) y[n] ~ bernoulli(theta);}'; print(pystan.stanc(model_code=bernoulli_model_code)['cppcode'])"
+  - SET "JOBLIB_MULTIPROCESSING=1"
   - ECHO "Starting the tests"
-  - nosetests -v .
+  - nosetests -v ../pystan/tests
   # Move back to the project folder
   - "cd .."
 
