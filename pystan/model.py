@@ -66,7 +66,7 @@ def _map_parallel(function, args, n_jobs):
         except ImportError:
             multiprocessing = None
         if sys.platform.startswith("win") and PY2:
-            logger.warning("Multiprocessing is not support on Windows with Python 2.X. Setting n_jobs=1")
+            logger.warning("Multiprocessing is not supported on Windows with Python 2.X. Setting n_jobs=1")
             n_jobs = 1
     # 2nd stage: validate that locking is available on the system and
     #            issue a warning if not
