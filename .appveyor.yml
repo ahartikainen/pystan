@@ -68,7 +68,7 @@ test_script:
   - cd empty_folder
   - SET "JOBLIB_MULTIPROCESSING=1"
   - ECHO "Starting the tests"
-  - nosetests -v ../pystan/tests
+  - "python -c \"import nose; nose.main()\" -v pystan.tests"
   # Move back to the project folder
   - "cd .."
 
