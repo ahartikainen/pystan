@@ -1,7 +1,7 @@
 version: '{build}'
 image: Visual Studio 2015
 platform:
-  #- x86
+  - x86
   - x64
 environment:
   global:
@@ -11,8 +11,8 @@ environment:
       secure: cqdCOlelH3UdBVv+FyD4nNfT5X5bB2OwqehwkxqMABKcHy1H4+t8v3jVVvTxV7uq
 
   matrix:
-    #- CONDA: 27
-    #- CONDA: 35
+    - CONDA: 27
+    - CONDA: 35
     - CONDA: 36
 
 install:
@@ -36,9 +36,9 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels conda-forge
   - conda update -q conda
-  - if NOT %CONDA%==27 (conda install setuptools numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q)
-  - if %CONDA%==27 (conda install setuptools numpy cython scipy matplotlib pandas libpython mingw -q)
-  - python -c "import os, distutils; f=open(os.path.join((os.path.split(distutils.__file__))[0], 'distutils.cfg'), 'w'); f.write('[build]\ncompiler=mingw32');f.close()"
+  - conda install setuptools numpy cython scipy matplotlib pandas libpython m2w64-toolchain -c msys2 -q
+  #- python -c "import os, distutils; f=open(os.path.join((os.path.split(distutils.__file__))[0], 'distutils.cfg'), 'w'); f.write('[build]\ncompiler=mingw32');f.close()"
+  - python -c "import numpy as np; print('numpy imported succesfull')"
   - gcc --version
   # Upgrade to the latest version of pip to avoid it displaying warnings
   # about it being out of date.
@@ -73,11 +73,11 @@ test_script:
   - "cd .."
 
 after_test:
-  - ECHO "AFTER TEST"
+  - ECHO "After tests - Building wheels"
   # If tests are successful, create binary packages for the project.
   # TODO: may need to set PBR_VERSION, submodules often confuse pbr
-  #- "%CMD_IN_ENV% python setup.py bdist_wheel"
-  #- ps: "ls dist"
+  - python setup.py bdist_wheel"
+  - ps: "ls dist"
   # APPVEYOR_REPO_TAG will be true if commit is tagged
-  #- "IF /I %APPVEYOR_REPO_TAG%==true (%CMD_IN_ENV% pip install wheelhouse-uploader)"
-  #- "IF /I %APPVEYOR_REPO_TAG%==true (%CMD_IN_ENV% python -m wheelhouse_uploader upload --local-folder=dist --no-ssl-check --no-update-index --region=%WHEELHOUSE_UPLOADER_REGION% wheels)"
+  - "IF /I %APPVEYOR_REPO_TAG%==true (pip install wheelhouse-uploader)"
+  - "IF /I %APPVEYOR_REPO_TAG%==true (python -m wheelhouse_uploader upload --local-folder=dist --no-ssl-check --no-update-index --region=%WHEELHOUSE_UPLOADER_REGION% wheels)"
