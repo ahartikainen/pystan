@@ -46,6 +46,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   #- conda config --add channels conda-forge
   - conda update -q conda
+  - conda update python
   - conda install setuptools libpython m2w64-toolchain -c msys2 -q
   # numpy==1.15.0 had problems with mkl_fft (date 2018-07-29)
   - conda install numpy cython scipy matplotlib pandas -q
