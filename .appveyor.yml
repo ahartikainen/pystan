@@ -48,7 +48,7 @@ install:
   - conda update -q conda
   - conda install setuptools libpython m2w64-toolchain -c msys2 -q
   # numpy==1.15.0 had problems with mkl_fft (date 2018-07-29)
-  - conda install numpy==1.14 cython scipy matplotlib pandas -q
+  - conda install numpy cython scipy openblas matplotlib pandas -q
   #- python -c "import os, distutils; f=open(os.path.join((os.path.split(distutils.__file__))[0], 'distutils.cfg'), 'w'); f.write('[build]\ncompiler=mingw32');f.close()"
   - python -c "import numpy as np; print('numpy imported succesfull')"
   - gcc --version
