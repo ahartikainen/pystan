@@ -44,11 +44,11 @@ install:
   - python --version
   - python -c "import struct; print(struct.calcsize('P') * 8)"
   - conda config --set always_yes yes --set changeps1 no
-  - conda config --add channels conda-forge
+  #- conda config --add channels conda-forge
   - conda update -q conda
   - conda install setuptools libpython m2w64-toolchain -c msys2 -q
   # numpy==1.15.0 had problems with mkl_fft (date 2018-07-29)
-  - conda install numpy cython scipy openblas matplotlib pandas -q
+  - conda install numpy cython scipy matplotlib pandas -q
   #- python -c "import os, distutils; f=open(os.path.join((os.path.split(distutils.__file__))[0], 'distutils.cfg'), 'w'); f.write('[build]\ncompiler=mingw32');f.close()"
   - python -c "import numpy as np; print('numpy imported succesfull')"
   - gcc --version
