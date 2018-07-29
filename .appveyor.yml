@@ -2,7 +2,7 @@ version: '{build}'
 image: Visual Studio 2015
 platform:
   - x86
-  #- x64
+  - x64
 environment:
   global:
     WHEELHOUSE_UPLOADER_REGION: IAD
@@ -11,9 +11,9 @@ environment:
       secure: cqdCOlelH3UdBVv+FyD4nNfT5X5bB2OwqehwkxqMABKcHy1H4+t8v3jVVvTxV7uq
 
   matrix:
-    #- CONDA: 27
+    - CONDA: 27
     - CONDA: 35
-    #- CONDA: 36
+    - CONDA: 36
 
 install:
   # If there is a newer build queued for the same PR, cancel this one.
@@ -46,7 +46,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   #- conda config --add channels conda-forge
   - conda update -q conda
-  - conda update python
+  - conda update --all -q
   - conda info
   - conda install setuptools libpython m2w64-toolchain -c msys2 -q
   # numpy==1.15.0 had problems with mkl_fft (date 2018-07-29)
