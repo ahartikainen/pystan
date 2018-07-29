@@ -143,7 +143,7 @@ def _array_to_table(arr, rownames, colnames, n_digits):
         line = '{name:{width}}'.format(name=rowname, width=widths[0])
         for j, (num, width) in enumerate(zip(row, widths[1:])):
             if colnames[j] == 'n_eff':
-                num = int(round(num, 0)) if not np.isnan(num) else str(num)
+                num = int(round(num, 0)) if not np.isnan(num) else num
             line += '{num:>{width}}'.format(num=_format_number(num, n_digits, max_col_width - 1), width=width)
         lines.append(line)
     return '\n'.join(lines)
