@@ -66,7 +66,7 @@ install:
 build_script:
   - ECHO "Starting to build the wheel"
   # build the wheel and install it
-  - python setup.py bdist_wheel bdist_wininst
+  - python setup.py --quiet bdist_wheel bdist_wininst
   - ps: "ls ."
   - dir dist
   - dir build
