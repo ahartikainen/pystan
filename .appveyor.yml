@@ -14,6 +14,7 @@ environment:
     - CONDA: 27
     - CONDA: 35
     - CONDA: 36
+    - CONDA: 37
 
 install:
   # If there is a newer build queued for the same PR, cancel this one.
@@ -30,6 +31,7 @@ install:
   - ps: "ls \"C:/\""
   - SET "CONDAPATH=conda%CONDA%"
   - if %CONDA%==27 (SET "CONDAPATH=conda")
+  - if %CONDA%==37 (SET "CONDAPATH=conda36")
   - if %PLATFORM%==x64 (SET "CONDAPATH=%CONDAPATH%-x64")
   #- SET "PATH=C:\\mingw-w64\\x86_64-7.3.0-posix-seh-rt_v5-rev0;%PATH%"
   #- ps: "ls \"C:\\mingw-w64\\x86_64-7.3.0-posix-seh-rt_v5-rev0\""
@@ -38,6 +40,8 @@ install:
   - CALL "C:\\Mini%CONDAPATH%\\Scripts\\conda.exe" info --envs
   - if %CONDA%==35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" root)
   - if NOT %CONDA%==35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base)
+  - conda update -q conda
+  - if %CONDA%==37 (CALL "conda create -n py37 python=3.7 -y && activate py37")
   # checkout submodules
   - git submodule update --init --recursive
   # Check that we have the expected version and architecture for Python
@@ -45,7 +49,6 @@ install:
   - python -c "import struct; print(struct.calcsize('P') * 8)"
   - conda config --set always_yes yes --set changeps1 no
   #- conda config --add channels conda-forge
-  - conda update -q conda
   - conda update --all -q
   - conda info
   - conda install numpy cython scipy matplotlib pandas setuptools libpython m2w64-toolchain -c msys2 -q
