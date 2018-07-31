@@ -40,6 +40,7 @@ install:
   - CALL "C:\\Mini%CONDAPATH%\\Scripts\\conda.exe" info --envs
   - if %CONDA%==35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" root)
   - if NOT %CONDA%==35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base)
+  - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   - if %CONDA%==37 (CALL "conda create -n py37 python=3.7 -y && activate py37")
   # checkout submodules
