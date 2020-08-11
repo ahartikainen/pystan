@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <map>
 #include <vector>
+#include <iostream>
 #include <string>
 
 #include <stan/io/var_context.hpp>
@@ -210,6 +211,7 @@ namespace pystan {
 
     std::shared_ptr<stan::io::var_context> get_var_context(const std::string file) {
     std::fstream stream(file.c_str(), std::fstream::in);
+    std::cout << "WHAT" << file;
     if (file != "" && (stream.rdstate() & std::ifstream::failbit)) {
       std::stringstream msg;
       msg << "Can't open specified file, \"" << file << "\"" << std::endl;

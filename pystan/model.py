@@ -807,6 +807,9 @@ class StanModel:
         if chains == 1:
             n_jobs = 1
 
+        
+        print(control)
+        print(args_list)
         assert len(args_list) == chains
         call_sampler_args = izip(itertools.repeat(data), args_list, itertools.repeat(pars))
         call_sampler_star = self.module._call_sampler_star
