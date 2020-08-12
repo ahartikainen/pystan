@@ -12,10 +12,7 @@ environment:
       secure: mjwuqrrrl71BQoPg5t++MKlVApmBBDAr7GmQtI5YawjhdpCJtMi+Tof4P1ENDCLp
 
   matrix:
-    - CONDA: 27
-    - CONDA: 35
-    - CONDA: 36
-    - CONDA: 37
+    - CONDA: 38
 
 install:
   # If there is a newer build queued for the same PR, cancel this one.
@@ -31,12 +28,10 @@ install:
   - ECHO "Filesystem root:"
   - ps: "ls \"C:/\""
   - SET "CONDAPATH=conda%CONDA%"
-  - if %CONDA%==27 (SET "CONDAPATH=conda")
   - if %PLATFORM%==x64 (SET "CONDAPATH=%CONDAPATH%-x64")
 
   - CALL "C:\\Mini%CONDAPATH%\\Scripts\\conda.exe" info --envs
-  - if %CONDA%==35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" root)
-  - if NOT %CONDA%==35 (CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base)
+  - CALL "C:\\Mini%CONDAPATH%\\Scripts\\activate.bat" base
 
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
@@ -58,7 +53,7 @@ install:
   # setup conda - use default channel
   - conda update --all -q
   - conda info
-  - conda install numpy cython scipy matplotlib pandas setuptools libpython m2w64-toolchain
+  - conda install numpy cython scipy matplotlib pandas setuptools libpython m2w64-toolchain -c msys2
   # test numpy
   - python -c "import numpy as np; print('numpy import was succesfull')"
   # test gcc version
@@ -107,11 +102,4 @@ test_script:
   - ECHO "End of testing"
 
 after_test:
-  # wheel is already built in "install" step
-  # If tests are successful, create binary packages for the project.
-  # TODO: may need to set PBR_VERSION, submodules often confuse pbr
-  #- python setup.py --quiet bdist_wheel
   - ps: "ls dist"
-  # APPVEYOR_REPO_TAG will be true if commit is tagged
-  - "IF /I %APPVEYOR_REPO_TAG%==true (pip install wheelhouse-uploader -q)"
-  - "IF /I %APPVEYOR_REPO_TAG%==true (python -m wheelhouse_uploader upload --local-folder=dist --no-ssl-check --no-update-index --region=%WHEELHOUSE_UPLOADER_REGION% wheels)"
