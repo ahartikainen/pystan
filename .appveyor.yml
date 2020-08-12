@@ -105,3 +105,7 @@ test_script:
 
 after_test:
   - ps: "ls dist"
+
+artifacts:
+  - path: dist/*.whl
+    name: Wheel
