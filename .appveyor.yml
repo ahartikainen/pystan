@@ -37,6 +37,7 @@ install:
   - conda update -q conda
 
   - conda create -n myenv python=3.8
+  - conda activate myenv
   - conda install git -y -q
   - git config --system core.longpaths true
   # checkout submodules
