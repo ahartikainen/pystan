@@ -24,8 +24,7 @@ jobs:
 
       - name: Install poetry
         run: |
-            uname
-            env
+            python -c "from distutils import util;print(util.get_platform())"
             pip install "poetry~=1.1.4" --platform macosx_11_0_x86_64 --only-binary=:all:
 
       # export test dependencies from pyproject.toml, install them
