@@ -29,13 +29,13 @@ jobs:
         run: |
             uname
             env
-            pip install "poetry~=1.1.4"
+            pip install "poetry~=1.1.4" --platform macosx_11_0_x86_64
 
       # export test dependencies from pyproject.toml, install them
       - name: Install dependencies
         run: |
           poetry export -f requirements.txt --without-hashes --dev -o requirements.txt \
-          && pip install -r requirements.txt
+          && pip install -r requirements.txt  --platform macosx_11_0_x86_64
 
       - name: Build and Install wheel
         run: |
