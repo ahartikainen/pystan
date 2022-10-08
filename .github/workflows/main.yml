@@ -26,7 +26,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install poetry
-        run: pip install "poetry~=1.1.4"
+        run: |
+            uname
+            env
+            pip install "poetry~=1.1.4"
 
       # export test dependencies from pyproject.toml, install them
       - name: Install dependencies
