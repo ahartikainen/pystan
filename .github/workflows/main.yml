@@ -10,9 +10,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - {runs-on: ubuntu-20.04, python-version: "3.8"}
-          - {runs-on: ubuntu-20.04, python-version: "3.9"}
-          - {runs-on: ubuntu-22.04, python-version: "3.10"}
           - {runs-on: macos-11, python-version: "3.8"}
           - {runs-on: macos-11, python-version: "3.9"}
           - {runs-on: macos-11, python-version: "3.10"}
@@ -29,13 +26,13 @@ jobs:
         run: |
             uname
             env
-            pip install "poetry~=1.1.4" --platform macosx_11_0_x86_64
+            pip install "poetry~=1.1.4" --platform macosx_11_0_x86_64 --only-binary=:all:
 
       # export test dependencies from pyproject.toml, install them
       - name: Install dependencies
         run: |
           poetry export -f requirements.txt --without-hashes --dev -o requirements.txt \
-          && pip install -r requirements.txt  --platform macosx_11_0_x86_64
+          && pip install -r requirements.txt  --platform macosx_11_0_x86_64 --only-binary=:all:
 
       - name: Build and Install wheel
         run: |
