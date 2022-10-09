@@ -22,17 +22,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: macos-11 pip fix
-        if: matrix.runs-on == 'macos-11'
-        run: |
-            env
-            python -c "from setuptools._distutils import util;print(util.get_platform())"
-            echo "'_PYTHON_HOST_PLATFORM'='macosx-11.0-x86_64'" >> $GITHUB_ENV
-            env
-            python -c "from setuptools._distutils import util;print(util.get_platform())"
-
-
       - name: Install poetry
+        env:
+            _PYTHON_HOST_PLATFORM: macosx-11.0-x86_64
         run: |
             env
             python -c "from setuptools._distutils import util;print(util.get_platform())"
@@ -40,11 +32,15 @@ jobs:
 
       # export test dependencies from pyproject.toml, install them
       - name: Install dependencies
+        env:
+            _PYTHON_HOST_PLATFORM: macosx-11.0-x86_64
         run: |
           poetry export -f requirements.txt --without-hashes --dev -o requirements.txt \
           && pip install -r requirements.txt
 
       - name: Build and Install wheel
+        env:
+            _PYTHON_HOST_PLATFORM: macosx-11.0-x86_64
         run: |
           poetry build -v
           python -m pip install dist/*.whl
