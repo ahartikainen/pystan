@@ -27,7 +27,7 @@ jobs:
         run: |
             env
             python -c "from setuptools._distutils import util;print(util.get_platform())"
-            echo "_PYTHON_HOST_PLATFORM='macosx-11.0-x86_64'" >> $GITHUB_ENV
+            echo "'_PYTHON_HOST_PLATFORM'='macosx-11.0-x86_64'" >> $GITHUB_ENV
             env
             python -c "from setuptools._distutils import util;print(util.get_platform())"
 
