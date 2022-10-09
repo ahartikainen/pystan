@@ -22,16 +22,24 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: macos-11 pip fix
+        if: matrix.runs-on == 'macos-11'
+        run: |
+            python -c "from setuptools._distutils import util;print(util.get_platform())"
+            echo "_PYTHON_HOST_PLATFORM=macosx-11.0-x86_64" >> $GITHUB_ENV
+            python -c "from setuptools._distutils import util;print(util.get_platform())"
+
+
       - name: Install poetry
         run: |
             python -c "from setuptools._distutils import util;print(util.get_platform())"
-            pip install "poetry~=1.1.4" --platform macosx_11_0_x86_64 --only-binary=:all:
+            pip install "poetry~=1.1.4"
 
       # export test dependencies from pyproject.toml, install them
       - name: Install dependencies
         run: |
           poetry export -f requirements.txt --without-hashes --dev -o requirements.txt \
-          && pip install -r requirements.txt  --platform macosx_11_0_x86_64 --only-binary=:all:
+          && pip install -r requirements.txt
 
       - name: Build and Install wheel
         run: |
